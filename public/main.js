@@ -273,10 +273,7 @@ async function fillApgePdf(formData) {
   drawText(pdfDoc, font, scheduleA.authorizedRep.phone1, formData.authorizedRep?.phone1);
   drawText(pdfDoc, font, scheduleA.authorizedRep.email1, formData.authorizedRep?.email1);
 
-  const productName = clean(formData.product?.productName || "Fixed Price");
-  if (productName && productName.toLowerCase() !== "fixed price") {
-    drawText(pdfDoc, font, scheduleA.product.productName, productName);
-  }
+  drawText(pdfDoc, font, scheduleA.product.productName, "Fixed Price");
 
   drawText(pdfDoc, font, scheduleA.product.contractPrice, formatContractPrice(formData.product?.contractPrice));
   drawText(pdfDoc, font, scheduleA.product.contractTermMonths, formData.product?.contractTermMonths);
@@ -284,7 +281,6 @@ async function fillApgePdf(formData) {
   drawText(pdfDoc, font, scheduleA.signature.printedName, formData.signature?.printedName);
   drawText(pdfDoc, font, scheduleA.signature.title, formData.signature?.title);
   drawText(pdfDoc, font, scheduleA.signature.date, formatDateForPdf(formData.signature?.date));
-  drawText(pdfDoc, font, scheduleA.signature.referenceId, formData.signature?.referenceId);
 
   const pageB = pdfDoc.getPages()[1];
   const locations = Array.isArray(formData.serviceLocations) ? formData.serviceLocations : [];
@@ -330,6 +326,19 @@ function toggleCustomerType() {
 
 function value(name) {
   return new FormData(form).get(name)?.toString() ?? "";
+}
+
+function getTodayInputDate() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function getPrintedCustomerName(customerType) {
+  if (customerType === "residential") return value("customerName");
+  return value("companyLegalName") || value("contactName");
 }
 
 function getServiceLocations() {
@@ -388,15 +397,14 @@ function buildPayload() {
       email1: value("repEmail")
     },
     product: {
-      productName: value("productName"),
+      productName: "Fixed Price",
       contractPrice: value("contractPrice"),
       contractTermMonths: value("contractTermMonths")
     },
     signature: {
-      printedName: value("printedName"),
-      title: value("signatureTitle"),
-      date: value("signatureDate"),
-      referenceId: value("referenceId")
+      printedName: getPrintedCustomerName(customerType),
+      title: "Owner",
+      date: getTodayInputDate()
     },
     serviceLocations: getServiceLocations()
   };

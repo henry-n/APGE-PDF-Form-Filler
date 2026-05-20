@@ -111,7 +111,7 @@
         <section class="form-section">
           <h2>5. Product Information</h2>
           <div class="grid">
-            <label>Product Name<input name="productName" /></label>
+            <label>Product Name<input name="productName" value="Fixed Price" readonly /></label>
             <label>Contract Price (¢/kWh)<input name="contractPrice" /></label>
             <label>Contract Term (months)<input name="contractTermMonths" /></label>
           </div>
@@ -125,15 +125,6 @@
           <div id="locations"></div>
         </section>
 
-        <section class="form-section">
-          <h2>7. PDF Metadata</h2>
-          <div class="grid">
-            <label>Printed Name<input name="printedName" /></label>
-            <label>Title<input name="signatureTitle" /></label>
-            <label>Date<input type="date" name="signatureDate" /></label>
-            <label>Reference ID<input name="referenceId" /></label>
-          </div>
-        </section>
 
         <div class="actions">
           <button type="submit" id="submitButton">Generate PDF</button>
