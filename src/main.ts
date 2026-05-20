@@ -247,7 +247,6 @@ function buildPayload(): ApgeFormData {
     },
 
     product: {
-      productName: "Fixed Price",
       contractPrice: value("contractPrice"),
       contractTermMonths: value("contractTermMonths")
     },
