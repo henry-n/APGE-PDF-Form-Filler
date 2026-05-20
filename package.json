@@ -1,21 +1,22 @@
 {
-  "name": "apge-pdf-filler-demo",
+  "name": "apge-pdf-form-filler",
   "version": "1.0.0",
-  "description": "Simple UI that maps custom form values into the APG&E PDF template using pdf-lib.",
+  "private": true,
+  "description": "Static TypeScript APG&E PDF filler that runs fully in the browser and deploys to GitHub Pages.",
   "type": "module",
-  "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc && vite build",
+    "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
-    "express": "^4.19.2",
     "pdf-lib": "^1.17.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "typescript": "^5.8.3",
+    "vite": "^7.0.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }

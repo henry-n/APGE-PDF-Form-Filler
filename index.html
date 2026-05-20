@@ -4,14 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>APG&E PDF Filler</title>
-    <link rel="stylesheet" href="./styles.css" />
-    <script type="importmap">
-      {
-        "imports": {
-          "pdf-lib": "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/+esm"
-        }
-      }
-    </script>
   </head>
   <body>
     <main class="page">
@@ -29,8 +21,8 @@
         <section class="form-section">
           <h2>1. Customer Type</h2>
           <div class="radio-row">
-            <label><input type="radio" name="customerType" value="commercial" checked /> Small Commercial</label>
-            <label><input type="radio" name="customerType" value="residential" /> Residential</label>
+            <label><input type="radio" name="customerType" value="residential" checked/> Residential</label>
+            <label><input type="radio" name="customerType" value="commercial" /> Small Commercial</label>
           </div>
         </section>
 
@@ -62,25 +54,28 @@
         <section class="form-section">
           <h2>3. Billing Information</h2>
           <div class="grid">
-            <label>Attention To<input name="attentionTo" /></label>
-            <label>Billing Email<input name="billingEmail" /></label>
-            <label>Billing Phone<input name="billingPhone" /></label>
-            <label>Federal Tax ID<input name="federalTaxId" /></label>
+            <label id="attentionToField">Attention To<input name="attentionTo" /></label>
+            <label id="billingEmailField">Billing Email<input name="billingEmail" /></label>
+            <label id="billingPhoneField">Billing Phone<input name="billingPhone" /></label>
+            <label id="federalTaxIdField">Federal Tax ID<input name="federalTaxId" /></label>
+
             <label>Invoice Type
               <select name="invoiceType">
-                <option value="" selected disabled>Select invoice type</option>
-                <option value="individual">Individual</option>
+                <option value="" disabled>Select invoice type</option>
+                <option value="individual" selected>Individual</option>
                 <option value="summary">Summary</option>
               </select>
             </label>
+
             <label>Delivery Preference
               <select name="deliveryPreference">
-                <option value="" selected disabled>Select delivery preference</option>
+                <option value="" disabled>Select delivery preference</option>
                 <option value="email">Email</option>
                 <option value="usps">USPS</option>
-                <option value="both">Both</option>
+                <option value="both" selected>Both</option>
               </select>
             </label>
+
             <label>Payment Method
               <select name="paymentMethod">
                 <option value="" selected disabled>Select payment method</option>
@@ -88,6 +83,7 @@
                 <option value="check">Check</option>
               </select>
             </label>
+
             <label>Language
               <select name="language">
                 <option value="" selected disabled>Select language</option>
@@ -125,7 +121,6 @@
           <div id="locations"></div>
         </section>
 
-
         <div class="actions">
           <button type="submit" id="submitButton">Generate PDF</button>
           <p id="status"></p>
@@ -139,8 +134,10 @@
           <h3>Service Location</h3>
           <button type="button" class="secondary danger remove-location">Remove</button>
         </div>
+
         <div class="grid">
           <label>ESI ID<input data-field="esiId" /></label>
+
           <label>Used For
             <select data-field="usedFor">
               <option value="" selected disabled>Select use type</option>
@@ -148,9 +145,27 @@
               <option value="resi">Residential</option>
             </select>
           </label>
-          <label>Service Address<input data-field="serviceAddress" /></label>
-          <label>Billing Address<input data-field="billingAddress" /></label>
+
+          <label>
+            Service Address
+            <input data-field="serviceAddress" />
+            <span class="checkbox">
+              <input type="checkbox" data-field="useCustomerMailingAddress" />
+              Use customer's mailing address
+            </span>
+          </label>
+
+          <label>
+            Billing Address
+            <input data-field="billingAddress" />
+            <span class="checkbox">
+              <input type="checkbox" data-field="sameAsServiceAddress" />
+              Same as service address
+            </span>
+          </label>
+
           <label>Estimated Start Date<input type="date" data-field="estimatedStartDate" /></label>
+
           <label>Enrollment Type
             <select data-field="enrollmentType">
               <option value="" selected disabled>Select enrollment type</option>
@@ -158,12 +173,13 @@
               <option value="move-in">Move-In</option>
             </select>
           </label>
+
           <label>Estimated Annual kWh<input data-field="estimatedAnnualKwh" /></label>
           <label class="checkbox"><input type="checkbox" data-field="taxExempt" /> Tax Exempt</label>
         </div>
       </div>
     </template>
 
-    <script type="module" src="./main.js"></script>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -1,19 +1,14 @@
-// PDF coordinate map for the APG&E template.
-// Page indexes are zero-based: page 0 = Schedule A, page 1 = Schedule B.
+import type { PdfField, RowColumn } from "./types";
 
-export const scheduleA = {
+export const scheduleA: Record<string, Record<string, PdfField>> = {
   residential: {
     customerName: { page: 0, x: 145, y: 682, size: 8.5, maxWidth: 150 },
     email: { page: 0, x: 375, y: 682, size: 8.5, maxWidth: 180 },
     dateOfBirth: { page: 0, x: 170, y: 667, size: 8.5, maxWidth: 80 },
-
-    // moved LEFT so the last 4 sits after "XXX-XX-" and before the Phone field
     ssnLast4: { page: 0, x: 330, y: 667, size: 8.5, maxWidth: 35 },
-
     phone: { page: 0, x: 450, y: 667, size: 8.5, maxWidth: 85 },
     mailingAddress: { page: 0, x: 135, y: 652, size: 8, maxWidth: 430 }
   },
-
   commercial: {
     companyLegalName: { page: 0, x: 190, y: 622, size: 8.5, maxWidth: 385 },
     dba: { page: 0, x: 230, y: 607, size: 8.5, maxWidth: 335 },
@@ -23,13 +18,11 @@ export const scheduleA = {
     phone: { page: 0, x: 88, y: 562, size: 8.5, maxWidth: 210 },
     fax: { page: 0, x: 350, y: 562, size: 8.5, maxWidth: 200 }
   },
-
   billing: {
     attentionTo: { page: 0, x: 75, y: 532, size: 8.5, maxWidth: 220 },
     email: { page: 0, x: 385, y: 532, size: 8.5, maxWidth: 200 },
     phone: { page: 0, x: 90, y: 517, size: 8.5, maxWidth: 215 },
     federalTaxId: { page: 0, x: 445, y: 517, size: 8.5, maxWidth: 125 },
-
     invoiceTypeIndividual: { page: 0, x: 164, y: 501, size: 8.5 },
     invoiceTypeSummary: { page: 0, x: 233, y: 501, size: 8.5 },
     deliveryEmail: { page: 0, x: 427, y: 501, size: 8.5 },
@@ -40,37 +33,34 @@ export const scheduleA = {
     languageEnglish: { page: 0, x: 398, y: 486, size: 8.5 },
     languageSpanish: { page: 0, x: 455, y: 486, size: 8.5 }
   },
-
   authorizedRep: {
     name1: { page: 0, x: 95, y: 457, size: 8.5, maxWidth: 205 },
     title1: { page: 0, x: 390, y: 457, size: 8.5, maxWidth: 200 },
     phone1: { page: 0, x: 95, y: 442, size: 8.5, maxWidth: 205 },
     email1: { page: 0, x: 390, y: 442, size: 8.5, maxWidth: 200 }
   },
-
   product: {
-    productName: { page: 0, x: 160, y: 413, size: 8.5, maxWidth: 250 },
     contractPrice: { page: 0, x: 515, y: 413, size: 8.5, maxWidth: 55 },
-
-    // moved LEFT
     contractTermMonths: { page: 0, x: 150, y: 398, size: 8.5, maxWidth: 35 }
   },
-
   signature: {
-    printedName: { page: 0, x: 470, y: 92, size: 8.5, maxWidth: 140 },
+    printedName: { page: 0, x: 400, y: 92, size: 8.5, maxWidth: 140 },
     title: { page: 0, x: 435, y: 77, size: 8.5, maxWidth: 140 },
-    date: { page: 0, x: 125, y: 61, size: 8.5, maxWidth: 75 },
-    referenceId: { page: 0, x: 495, y: 61, size: 8.5, maxWidth: 85 }
+    date: { page: 0, x: 125, y: 61, size: 8.5, maxWidth: 75 }
   }
 };
 
-export const scheduleB = {
+export const scheduleB: {
+  firstRowY: number;
+  rowHeight: number;
+  maxRows: number;
+  columns: Record<string, RowColumn>;
+  totalAccounts: PdfField;
+} = {
   firstRowY: 468,
   rowHeight: 29.25,
   maxRows: 13,
   columns: {
-    // Bigger text for readability on the service-location table.
-    // Slightly lowered firstRowY so larger text stays vertically centered.
     esiId: { x: 25, size: 8.2, maxWidth: 115 },
     resiCheck: { x: 165, size: 9.5 },
     commCheck: { x: 200, size: 9.5 },
