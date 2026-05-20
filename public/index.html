@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>APG&E PDF Filler Demo</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Proof of concept</p>
+          <h1>APG&E PDF Filler</h1>
+          <p>
+            Fill out the simple form below and generate the completed APG&E PDF. This demo only maps values to the PDF; it does not handle signatures yet.
+          </p>
+        </div>
+      </section>
+
+      <form id="apgeForm" class="card">
+        <section class="form-section">
+          <h2>1. Customer Type</h2>
+          <div class="radio-row">
+            <label><input type="radio" name="customerType" value="commercial" checked /> Small Commercial</label>
+            <label><input type="radio" name="customerType" value="residential" /> Residential</label>
+          </div>
+        </section>
+
+        <section class="form-section" id="commercialFields">
+          <h2>2. Small Commercial Customer</h2>
+          <div class="grid">
+            <label>Company Legal Entity Name<input name="companyLegalName" value="ABC Restaurant LLC" /></label>
+            <label>DBA<input name="dba" value="ABC Tacos" /></label>
+            <label>Contact Name<input name="contactName" value="Henry Nguyen" /></label>
+            <label>Contact Email<input name="contactEmail" value="henry@example.com" /></label>
+            <label>Company Address<input name="companyAddress" value="123 Main St, Houston, TX 77002" /></label>
+            <label>Phone<input name="commercialPhone" value="713-555-1234" /></label>
+            <label>Fax<input name="fax" /></label>
+          </div>
+        </section>
+
+        <section class="form-section hidden" id="residentialFields">
+          <h2>2. Residential Customer</h2>
+          <div class="grid">
+            <label>Customer Name<input name="customerName" value="Henry Nguyen" /></label>
+            <label>Email<input name="residentialEmail" value="henry@example.com" /></label>
+            <label>Date of Birth<input type="date" name="dateOfBirth" /></label>
+            <label>SSN Last 4<input name="ssnLast4" maxlength="4" /></label>
+            <label>Phone<input name="residentialPhone" value="713-555-1234" /></label>
+            <label>Mailing Address<input name="mailingAddress" value="123 Main St, Houston, TX 77002" /></label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>3. Billing Information</h2>
+          <div class="grid">
+            <label>Attention To<input name="attentionTo" value="Accounts Payable" /></label>
+            <label>Billing Email<input name="billingEmail" value="billing@example.com" /></label>
+            <label>Billing Phone<input name="billingPhone" value="713-555-2222" /></label>
+            <label>Federal Tax ID<input name="federalTaxId" value="12-3456789" /></label>
+            <label>Invoice Type
+              <select name="invoiceType">
+                <option value="individual">Individual</option>
+                <option value="summary" selected>Summary</option>
+              </select>
+            </label>
+            <label>Delivery Preference
+              <select name="deliveryPreference">
+                <option value="email" selected>Email</option>
+                <option value="usps">USPS</option>
+                <option value="both">Both</option>
+              </select>
+            </label>
+            <label>Payment Method
+              <select name="paymentMethod">
+                <option value="ach" selected>ACH</option>
+                <option value="check">Check</option>
+              </select>
+            </label>
+            <label>Language
+              <select name="language">
+                <option value="english" selected>English</option>
+                <option value="spanish">Spanish</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>4. Authorized Representative</h2>
+          <div class="grid">
+            <label>Name<input name="repName" value="Henry Nguyen" /></label>
+            <label>Title<input name="repTitle" value="Owner" /></label>
+            <label>Phone<input name="repPhone" value="713-555-1234" /></label>
+            <label>Email<input name="repEmail" value="henry@example.com" /></label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <h2>5. Product Information</h2>
+          <div class="grid">
+            <label>Product Name<input name="productName" value="Fixed Price" /></label>
+            <label>Contract Price (¢/kWh)<input name="contractPrice" value="8.25" /></label>
+            <label>Contract Term (months)<input name="contractTermMonths" value="12" /></label>
+            <label>Monthly Charge ($)<input name="monthlyCharge" value="0" /></label>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-header">
+            <h2>6. Service Locations</h2>
+            <button type="button" class="secondary" id="addLocation">+ Add Location</button>
+          </div>
+          <div id="locations"></div>
+        </section>
+
+        <section class="form-section">
+          <h2>7. PDF Metadata</h2>
+          <div class="grid">
+            <label>Printed Name<input name="printedName" value="Henry Nguyen" /></label>
+            <label>Title<input name="signatureTitle" value="Owner" /></label>
+            <label>Date<input type="date" name="signatureDate" /></label>
+            <label>Reference ID<input name="referenceId" value="DEMO-001" /></label>
+          </div>
+        </section>
+
+        <div class="actions">
+          <button type="submit" id="submitButton">Generate PDF</button>
+          <p id="status"></p>
+        </div>
+      </form>
+    </main>
+
+    <template id="locationTemplate">
+      <div class="location-card">
+        <div class="section-header">
+          <h3>Service Location</h3>
+          <button type="button" class="secondary danger remove-location">Remove</button>
+        </div>
+        <div class="grid">
+          <label>ESI ID<input data-field="esiId" value="10089010203040506" /></label>
+          <label>Used For
+            <select data-field="usedFor">
+              <option value="comm" selected>Commercial</option>
+              <option value="resi">Residential</option>
+            </select>
+          </label>
+          <label>Service Address<input data-field="serviceAddress" value="123 Main St, Houston, TX 77002" /></label>
+          <label>Billing Address<input data-field="billingAddress" value="123 Main St, Houston, TX 77002" /></label>
+          <label>Estimated Start Date<input type="date" data-field="estimatedStartDate" /></label>
+          <label>Enrollment Type
+            <select data-field="enrollmentType">
+              <option value="switch" selected>Switch</option>
+              <option value="move-in">Move-In</option>
+            </select>
+          </label>
+          <label>Estimated Annual kWh<input data-field="estimatedAnnualKwh" value="25000" /></label>
+          <label class="checkbox"><input type="checkbox" data-field="taxExempt" /> Tax Exempt</label>
+        </div>
+      </div>
+    </template>
+
+    <script src="/main.js"></script>
+  </body>
+</html>
