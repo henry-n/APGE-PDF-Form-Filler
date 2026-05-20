@@ -2,14 +2,17 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 
 const TEMPLATE_URL = new URL("./templates/APGE Template Full.pdf", import.meta.url);
 
-const scheduleA = {
+export const scheduleA = {
   residential: {
-    customerName: { page: 0, x: 105, y: 682, size: 8.5, maxWidth: 190 },
-    email: { page: 0, x: 345, y: 682, size: 8.5, maxWidth: 210 },
-    dateOfBirth: { page: 0, x: 175, y: 667, size: 8.5, maxWidth: 80 },
-    ssnLast4: { page: 0, x: 350, y: 667, size: 8.5, maxWidth: 45 },
-    phone: { page: 0, x: 455, y: 667, size: 8.5, maxWidth: 100 },
-    mailingAddress: { page: 0, x: 115, y: 652, size: 8, maxWidth: 440 }
+    customerName: { page: 0, x: 145, y: 682, size: 8.5, maxWidth: 150 },
+    email: { page: 0, x: 375, y: 682, size: 8.5, maxWidth: 180 },
+    dateOfBirth: { page: 0, x: 170, y: 667, size: 8.5, maxWidth: 80 },
+
+    // moved LEFT so the last 4 sits after "XXX-XX-" and before the Phone field
+    ssnLast4: { page: 0, x: 330, y: 667, size: 8.5, maxWidth: 35 },
+
+    phone: { page: 0, x: 450, y: 667, size: 8.5, maxWidth: 85 },
+    mailingAddress: { page: 0, x: 135, y: 652, size: 8, maxWidth: 430 }
   },
 
   commercial: {
@@ -49,7 +52,9 @@ const scheduleA = {
   product: {
     productName: { page: 0, x: 160, y: 413, size: 8.5, maxWidth: 250 },
     contractPrice: { page: 0, x: 515, y: 413, size: 8.5, maxWidth: 55 },
-    contractTermMonths: { page: 0, x: 165, y: 398, size: 8.5, maxWidth: 50 }
+
+    // moved LEFT
+    contractTermMonths: { page: 0, x: 150, y: 398, size: 8.5, maxWidth: 35 }
   },
 
   signature: {
@@ -60,21 +65,23 @@ const scheduleA = {
   }
 };
 
-const scheduleB = {
-  firstRowY: 471,
+export const scheduleB = {
+  firstRowY: 468,
   rowHeight: 29.25,
   maxRows: 13,
   columns: {
-    esiId: { x: 28, size: 6.6, maxWidth: 108 },
-    resiCheck: { x: 162, size: 8.5 },
-    commCheck: { x: 198, size: 8.5 },
-    serviceAddress: { x: 228, size: 6.2, maxWidth: 125 },
-    billingAddress: { x: 374, size: 6.2, maxWidth: 125 },
-    estimatedStartDate: { x: 528, size: 6.6, maxWidth: 45 },
-    taxExemptCheck: { x: 604, size: 8.5 },
-    moveInCheck: { x: 643, size: 8.5 },
-    switchCheck: { x: 681, size: 8.5 },
-    estimatedAnnualKwh: { x: 719, size: 6.6, maxWidth: 45 }
+    // Bigger text for readability on the service-location table.
+    // Slightly lowered firstRowY so larger text stays vertically centered.
+    esiId: { x: 25, size: 8.2, maxWidth: 115 },
+    resiCheck: { x: 165, size: 9.5 },
+    commCheck: { x: 200, size: 9.5 },
+    serviceAddress: { x: 226, size: 8, maxWidth: 132 },
+    billingAddress: { x: 372, size: 8, maxWidth: 132 },
+    estimatedStartDate: { x: 526, size: 8, maxWidth: 55 },
+    taxExemptCheck: { x: 604, size: 11 },
+    moveInCheck: { x: 640, size: 11 },
+    switchCheck: { x: 681, size: 11 },
+    estimatedAnnualKwh: { x: 718, size: 8, maxWidth: 50 }
   },
   totalAccounts: { page: 1, x: 119, y: 63, size: 8.5, maxWidth: 25 }
 };
