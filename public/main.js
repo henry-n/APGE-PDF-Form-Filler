@@ -1,6 +1,6 @@
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 
-const TEMPLATE_URL = new URL("./templates/APGE Template Full.pdf", import.meta.url);
+const TEMPLATE_URL = new URL("./templates/apge-template-full.pdf", import.meta.url);
 
 export const scheduleA = {
   residential: {
@@ -311,17 +311,9 @@ async function fillApgePdf(formData) {
   return await pdfDoc.save();
 }
 
-function setDefaultDates() {
-  const today = new Date().toISOString().slice(0, 10);
-  const signatureDate = document.querySelector("input[name='signatureDate']");
-  if (signatureDate) signatureDate.value = today;
-}
-
 function addLocation() {
   const clone = locationTemplate.content.cloneNode(true);
   const card = clone.querySelector(".location-card");
-  const startDate = clone.querySelector("[data-field='estimatedStartDate']");
-  startDate.value = new Date().toISOString().slice(0, 10);
 
   clone.querySelector(".remove-location").addEventListener("click", () => {
     card.remove();
@@ -426,11 +418,14 @@ form.addEventListener("submit", async (event) => {
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
+
     link.href = url;
     link.download = `apge-completed-${Date.now()}.pdf`;
+
     document.body.appendChild(link);
     link.click();
     link.remove();
+
     window.URL.revokeObjectURL(url);
 
     statusEl.textContent = "PDF downloaded.";
@@ -442,6 +437,5 @@ form.addEventListener("submit", async (event) => {
   }
 });
 
-setDefaultDates();
 addLocation();
 toggleCustomerType();
