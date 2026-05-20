@@ -169,12 +169,6 @@ export async function fillApgePdf(formData) {
   drawText(pdfDoc, font, scheduleA.authorizedRep.phone1, formData.authorizedRep?.phone1);
   drawText(pdfDoc, font, scheduleA.authorizedRep.email1, formData.authorizedRep?.email1);
 
-  const productName = clean(formData.product?.productName || "Fixed Price");
-
-  if (productName && productName.toLowerCase() !== "fixed price") {
-    drawText(pdfDoc, font, scheduleA.product.productName, productName);
-  }
-
   drawText(pdfDoc, font, scheduleA.product.contractPrice, formatContractPrice(formData.product?.contractPrice));
   drawText(pdfDoc, font, scheduleA.product.contractTermMonths, formData.product?.contractTermMonths);
 

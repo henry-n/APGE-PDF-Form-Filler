@@ -273,8 +273,6 @@ async function fillApgePdf(formData) {
   drawText(pdfDoc, font, scheduleA.authorizedRep.phone1, formData.authorizedRep?.phone1);
   drawText(pdfDoc, font, scheduleA.authorizedRep.email1, formData.authorizedRep?.email1);
 
-  drawText(pdfDoc, font, scheduleA.product.productName, "Fixed Price");
-
   drawText(pdfDoc, font, scheduleA.product.contractPrice, formatContractPrice(formData.product?.contractPrice));
   drawText(pdfDoc, font, scheduleA.product.contractTermMonths, formData.product?.contractTermMonths);
 
