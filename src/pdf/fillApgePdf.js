@@ -3,7 +3,7 @@ import path from "node:path";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import { fileURLToPath } from "node:url";
 import { scheduleA, scheduleB } from "./apgeFieldMap.js";
-import { clean, formatContractPrice, formatCurrency, formatDateForPdf } from "./formatPdfValues.js";
+import { clean, formatContractPrice, formatDateForPdf } from "./formatPdfValues.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -23,7 +23,13 @@ function drawText(pdfDoc, font, field, value) {
   const maxWidth = field.maxWidth;
 
   if (!maxWidth) {
-    page.drawText(text, { x: field.x, y: field.y, size, font, color: rgb(0, 0, 0) });
+    page.drawText(text, {
+      x: field.x,
+      y: field.y,
+      size,
+      font,
+      color: rgb(0, 0, 0)
+    });
     return;
   }
 
@@ -41,6 +47,7 @@ function drawText(pdfDoc, font, field, value) {
 
 function drawCheck(pdfDoc, font, field, shouldCheck) {
   if (!shouldCheck) return;
+
   const page = getPage(pdfDoc, field);
   page.drawText("X", {
     x: field.x,
@@ -69,6 +76,7 @@ function drawRowText(page, font, column, y, value) {
 
 function drawRowCheck(page, font, column, y, shouldCheck) {
   if (!shouldCheck) return;
+
   page.drawText("X", {
     x: column.x,
     y,
@@ -125,7 +133,7 @@ export async function fillApgePdf(formData) {
   if (type === "residential") {
     drawText(pdfDoc, font, scheduleA.residential.customerName, formData.residential?.customerName);
     drawText(pdfDoc, font, scheduleA.residential.email, formData.residential?.email);
-    drawText(pdfDoc, font, scheduleA.residential.dateOfBirth, formData.residential?.dateOfBirth);
+    drawText(pdfDoc, font, scheduleA.residential.dateOfBirth, formatDateForPdf(formData.residential?.dateOfBirth));
     drawText(pdfDoc, font, scheduleA.residential.ssnLast4, formData.residential?.ssnLast4);
     drawText(pdfDoc, font, scheduleA.residential.phone, formData.residential?.phone);
     drawText(pdfDoc, font, scheduleA.residential.mailingAddress, formData.residential?.mailingAddress);
@@ -169,7 +177,6 @@ export async function fillApgePdf(formData) {
 
   drawText(pdfDoc, font, scheduleA.product.contractPrice, formatContractPrice(formData.product?.contractPrice));
   drawText(pdfDoc, font, scheduleA.product.contractTermMonths, formData.product?.contractTermMonths);
-  drawText(pdfDoc, font, scheduleA.product.monthlyCharge, formatCurrency(formData.product?.monthlyCharge));
 
   drawText(pdfDoc, font, scheduleA.signature.printedName, formData.signature?.printedName);
   drawText(pdfDoc, font, scheduleA.signature.title, formData.signature?.title);

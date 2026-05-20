@@ -94,8 +94,7 @@ function buildPayload() {
     product: {
       productName: value("productName"),
       contractPrice: value("contractPrice"),
-      contractTermMonths: value("contractTermMonths"),
-      monthlyCharge: value("monthlyCharge")
+      contractTermMonths: value("contractTermMonths")
     },
     signature: {
       printedName: value("printedName"),
