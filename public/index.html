@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>APG&E PDF Filler Demo</title>
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "pdf-lib": "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/+esm"
+        }
+      }
+    </script>
   </head>
   <body>
     <main class="page">
@@ -13,7 +20,7 @@
           <p class="eyebrow">Proof of concept</p>
           <h1>APG&E PDF Filler</h1>
           <p>
-            Fill out the simple form below and generate the completed APG&E PDF. This demo only maps values to the PDF; it does not handle signatures yet.
+            Fill out the simple form below and generate the completed APG&E PDF. This runs in your browser and downloads the PDF directly to your computer.
           </p>
         </div>
       </section>
@@ -46,7 +53,7 @@
             <label>Customer Name<input name="customerName" value="Henry Nguyen" /></label>
             <label>Email<input name="residentialEmail" value="henry@example.com" /></label>
             <label>Date of Birth<input type="date" name="dateOfBirth" /></label>
-            <label>SSN Last 4<input name="ssnLast4" maxlength="4" placeholder="1234" /></label>
+            <label>SSN Last 4<input name="ssnLast4" maxlength="4" inputmode="numeric" /></label>
             <label>Phone<input name="residentialPhone" value="713-555-1234" /></label>
             <label>Mailing Address<input name="mailingAddress" value="123 Main St, Houston, TX 77002" /></label>
           </div>
@@ -160,6 +167,6 @@
       </div>
     </template>
 
-    <script src="/main.js"></script>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>
